@@ -3,7 +3,7 @@
 **Platform:** Palantir Foundry  
 **Duration:** July 2025 – Sept. 2025  
 
-OdysseyAI is a tool to help guide users through an interactive reading of Ancient Greek texts. Features Professor Mentor, the AI who trains your reading fluency through active prediction and contextual understanding. Users may select lines of text of the object table and ask questions. Mentor draws from a structured ontology object containing the complete lexical, morphological, and syntactic features, for each line as well as next-token prompts, and teaching notes. The goal of this application is to better align Classical language learning with natural language acquistion.
+OdysseyAI guides users through interactive readings of Ancient Greek texts. It features Professor Mentor, an AI that trains reading fluency through active prediction and contextual understanding. Users can select lines from the object table and ask questions. Mentor uses a structured ontology object with complete lexical, morphological, and syntactic features for each line, as well as next-token prompts and teaching notes. The application's goal is to better align Classical language learning with natural language acquisition.
 ---
 
 ## Features
