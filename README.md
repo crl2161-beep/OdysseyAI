@@ -6,6 +6,30 @@
 OdysseyAI guides users through interactive readings of Ancient Greek texts. It features Professor Mentor, an AI that trains reading fluency through active prediction and contextual understanding. Users can select lines from the object table and ask questions. Mentor uses a structured ontology object with complete lexical, morphological, and syntactic features for each line, as well as next-token prompts and teaching notes. The application's goal is to better align Classical language learning with natural language acquisition.
 ---
 # Ancient Greek Agentic AI Workshop 
+## For Users
+
+This platform lets you **read and explore Homeric Greek interactively**. The AI agent can operate in two modes:
+
+1. **Structured Predictive Reading**  
+   - Click a line of text in the Workshop App  
+   - The agent provides a **missing-word challenge** with hints  
+   - Tracks your **progress and correct/incorrect responses**  
+
+2. **Free Exploration Mode**  
+   - Enter a passage (Greek text or scholarly reference)  
+   - The agent provides **morphology, syntax, and commentary**  
+   - Connects to other parts of the text or external references via **ontology and RAG**
+
+**Quick Start**  
+1. Open the **Workshop App** in Foundry  
+2. Select the text or line you want to study  
+3. Choose your **mode**: Predictive Reading or Free Exploration  
+4. Follow the AI prompts to **learn vocabulary, grammar, and syntax** interactively  
+
+**Tips for Effective Use**  
+- Start with **structured reading** to build foundational understanding  
+- Use **free exploration** to dive deeper into morphology and style  
+- Revisit lines to see **progress over time**
 
 ## Front-Page Summary
 An **AI-powered platform** for interactive reading and analysis of Greek with dual modes:  
