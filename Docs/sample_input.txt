@@ -1,0 +1,72 @@
+Odyssey 9.1-10
+ τὸν δ᾽ ἀπαμειβόμενος προσέφη πολύμητις Ὀδυσσεύς· 1 
+ “ Ἀλκίνοε κρεῖον, πάντων ἀριδείκετε λαῶν, 2 
+ ἦ τοι μὲν τόδε καλὸν ἀκουέμεν ἐστὶν ἀοιδοῦ 3 
+ τοιοῦδ᾽ οἷος ὅδ᾽ ἐστί, θεοῖς ἐναλίγκιος αὐδήν. 4 
+ οὐ γὰρ ἐγώ γέ τί φημι τέλος χαριέστερον εἶναι 5 
+ ἢ ὅτ᾽ ἐϋφροσύνη μὲν ἔχῃ κάτα δῆμον ἅπαντα, 6 
+ δαιτυμόνες δ᾽ ἀνὰ δώματ᾽ ἀκουάζωνται ἀοιδοῦ 7 
+ ἥμενοι ἑξείης, παρὰ δὲ πλήθωσι τράπεζαι 8 
+ σίτου καὶ κρειῶν, μέθυ δ᾽ ἐκ κρητῆρος ἀφύσσων 9 
+ οἰνοχόος φορέῃσι καὶ ἐγχείῃ δεπάεσσι· 10 
+ἀκουάζοµαι: to hear, listen to (gen.) 1
+Ἀλκίνοος, ὁ: Alcinous, King of Phaeacians, 6
+ἀοιδός, ὁ: bard, singer, 3
+ἀπ-αµείβοµαι: to reply, answer, 7
+ἅπας, ἅπασα, ἅπαν: every, quite all, 7
+ἀρι-δείκετος, -ον: renowned, much shown, 4
+αὐδή, ἡ: voice, 7
+ἀφύσσω: to draw, draw off, 2
+δαιτυµών, -ονος, ὁ: guest, 1
+δέπας, τό: drinking cup, cup, goblet, 3
+δῆµος, ὁ: district, country, land; people, 3
+ἐγ-χέω: to pour in, drop in, 2
+ἐν-αλίγκιος, -ον: like, resembling (dat.) 1
+ἑξ-είης: in a row, in order, in sequence, 6
+εὐ-φροσύνη, ἡ: gladness, happiness, joy, 3
+κρέας, τό: flesh, meat, piece of meat, 11
+κρείων, ὁ: ruler, lord, master, 8
+κρητήρ, ὁ: mixing vessel, krater, 5
+λαός, ὁ: the people, 9
+µέθυ, τό: wine, 9
+οἰνοχόος, ὁ: wine-pourer, cup-bearer, 1
+οἷος, -α, -ον: of what sort, such, as, 13
+πλήθω: to be filled + gen., 2
+πολύ-µητις: of much cunning, many device 3
+πρόσ-φηµι: to speak to, address, 10
+σῖτος, ὁ: grain, bread; food, 11
+τέλος, -εος, τό: end, result, fulfillment, 7
+τοιόσδε, -άδε, -όνδε: such, 3
+τράπεζα, ἡ: table, 3
+φορέω: to carry, wear, 5
+χαρίεις, -εντος: graceful, beautiful, lovely, 4
+1 τὸν δ ᾿: him; i.e. Alcinous, as Odysseus
+responds to Alcinous’ question from 8.577
+προσέφη: addressed; 3s impf. πρόσφηµι
+2 Ἀλκίνοε κρεῖον… ἀριδείκετε: vocative 
+3 ἦ τοι: truly indeed; τοι is a particle
+τόδε καλὸν ἀκουέµεν: this is a fine thing, 
+(namely) to hear…; ἀκουέµεν is an inf. 
+governs a gen. of source (‘from’) ἀοιδοῦ
+4 τοιοῦδ ᾿ οἷος: such…as; correlatives
+αὐδήν: in voice; accusative of respect
+5 οὐ…φηµι: I say that… not; or ‘deny that’
+τι…τέλος χαριέστερον εἶναι: that there is 
+(no)…more pleasing fulfillment… ; ind. 
+disc. subj. of the inf. εἰµί
+6 ἤ: than…; with comparative χαρέστερον
+ὅτ᾽ : when(ever)..; ὅτε
+ἔχῃ κατα: takes hold over..; 3s pres. subj. 
+ἔχω in a general temporal clause; this may 
+also be tmesis for κατέχω
+7 ἄνα δώµατ(α): through + acc.
+ἀκουάζωνται…πλήθωσι: 3p pres. subj. in 
+the general temporal clause
+8 ἥµενοι: pres. mid. pple from ἧµαι, ‘to sit’
+παρὰ δὲ: and beside (them)
+9 κρειῶν: partitive gen. pl. κρέας, ‘meat’;
+compare the accent with κρείων, ‘lord’
+10 φορέῃσι καὶ ἐγχείῃ: carries and pours in; 
+3s subj. in same general temporal clause
+δεπάεσσι: in cups; dat. pl. of compound 
+verb (ἐγ-χέω, ‘pour in’)

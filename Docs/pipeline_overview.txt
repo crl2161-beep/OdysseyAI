@@ -1,0 +1,170 @@
+# AI Pipeline Walkthrough: From Raw Text to Learner Interaction
+
+## Overview
+This project implements an AI-driven pipeline for interactive reading of Ancient Greek texts. It transforms raw annotated text into structured JSON ontologies, enabling guided learner interactions, adaptive feedback, and integration of scholarly commentary. The pipeline is modular and fully generalizable to other domains requiring structured, interactive learning.
+
+---
+
+## 1. Input Layer: Raw Annotated Text
+- **Source:** Homeric or Classical Greek texts, optionally annotated with glossaries, commentary, or morphological notes  
+- **Format:** Plain text, PDFs, or pre-existing markup  
+- **Goal:** Prepare text for structured processing while preserving all available annotations  
+
+**Example Input Line: ἥμενοι ἑξείης παρὰ δὲ πλήθωσι τράπεζαι**
+ 
+---
+
+## 2. Preprocessing & Segmentation
+- **Tokenization:** Split lines into individual words and punctuation  
+- **Normalization:** Strip diacritics, unify encoding, standardize forms  
+- **Annotation Alignment:** Attach glossary entries and commentary where available  
+
+**Output:** Line-level token sequence ready for LLM transformations  
+
+---
+
+## 3. Multi-LLM Transformation Layer
+Each token undergoes several transformations:
+
+### 3.1 Lexical Analysis
+- Extracts lemma, part of speech, and morphological features  
+- Flags difficult or uncommon features  
+
+**Example JSON:**
+```json
+{
+  "form": "ἥμενοι",
+  "lemma": "ἧμαι",
+  "pos": "participle",
+  "morphology": {
+    "aspect": "imperfective",
+    "case": "nominative",
+    "mood": "participle",
+    "number": "plural",
+    "gender": "masculine"
+  },
+  "difficult_features": [
+    "deponent verb",
+    "participle used as predicate adjective"
+  ]
+}
+
+3.2 Syntactic Analysis
+
+Identifies grammatical relationships: subject, object, modifiers
+
+Flags literary-specific constructions: verb-first order, postpositive conjunctions, epic circumstantial participles
+
+Example Note:
+Circumstantial participle (nominative) – ἥμενοι: scene-setting, implied subject.
+
+3.3 Next-Token Prediction & Cue Generation
+
+Uses predictive prompts to anticipate what learners should see next
+
+Supports guided reading by cueing likely adverbs, prepositional phrases, or finite verbs
+
+3.4 Pedagogical Annotation
+
+Generates teaching_notes explaining token functions, usage, and learning strategies
+
+Errors become teachable moments
+
+4. Structured Ontology Object Creation
+
+Each line produces a JSON object combining lexical, syntactic, predictive, and pedagogical data.
+Example Structure:
+
+{
+  "lexical_features": [...],
+  "next_token_prompt": [...],
+  "syntax_features": [...],
+  "teaching_note": [...]
+}
+
+
+Serves as the “learning atom”
+
+Encodes word-level features, token predictions, syntactic relationships, and pedagogical guidance
+
+5. Retrieval-Augmented Generation (RAG) Integration
+
+Incorporates external references (scholarly papers, commentaries)
+
+Uses embeddings to retrieve relevant examples or explanations for tokens or constructions
+
+Ensures feedback is accurate, contextually grounded, and connected to expert literature
+
+6. Logic Blocks & AI Agents
+
+Modular agents operate on JSON ontologies:
+
+Text Line Search: Identify current token/phrase in context
+
+Commentary Filler: Populate missing annotations
+
+Pattern Recognizer: Detect new syntactic or grammatical patterns
+
+Ontology Updater: Integrate new lines or corrections automatically
+
+7. Learner Interaction Layer
+
+Workshop App Modes:
+
+7.1 Structured Line-by-Line
+
+Presents tokens sequentially
+
+Prompts learners to anticipate next words or parse syntax
+
+Provides instant feedback using teaching_note and next-token predictions
+
+7.2 Freeform Exploration
+
+Learners explore morphology, syntax, style, or commentary at will
+
+Query JSON ontology by token, feature, or scholarly reference
+
+8. Progress Tracking & Adaptive Feedback
+
+Logs learner actions: guesses, correctness, timestamps
+
+Generates analytics: strengths, weaknesses, mastery of patterns
+
+Adaptive guidance adjusts difficulty and reinforces learning loops
+
+9. Pedagogical Impact
+
+Encourages anticipatory reading and intuitive parsing
+
+Integrates scholarly commentary into actionable learning
+
+Errors are transformed into teachable moments
+
+10. Domain Generalization
+
+The pipeline is domain-agnostic and can be applied to:
+
+Law: annotated statutes and case summaries
+
+Medicine: clinical protocols and diagnostic steps
+
+Engineering: stepwise procedures and component references
+
+Key Concept: Replace Greek morphology with domain-specific units; prediction and teaching logic remain consistent
+
+✅ Summary
+
+Input raw text → tokenize & normalize
+
+Multi-LLM transformations → extract lexical, syntactic, and pedagogical info
+
+Produce JSON ontology objects → encapsulate line-level knowledge
+
+RAG & logic blocks → enrich and maintain ontology
+
+Interactive Workshop App → guide learners using JSON, track progress, adaptive feedback
+
+Analytics & reflection loops → ensure mastery and predictive skill development
+
+Fully generalizable → applicable to any structured, interactive learning domain

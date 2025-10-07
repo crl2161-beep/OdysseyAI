@@ -1,0 +1,20 @@
+summarize text and extract entities
+
+I need your help with a classics project; your task is to summarize  a short snippet of text from a few papers on Homeric participles and syntax, and extract a list of entities mentioned. 
+
+The list of entities could be of any one of the following categories:
+
+"grammatical pattern" – For example: μὲν...δὲ, finite verb unit, expectation cue
+"participial construction" – For example: supplementary participle (include case/number/gender and syntactic role), circumstantial participle, genitive absolute
+"lexical item" – For example: ἰδών, πόδας ὠκὺς Ἀχιλλεύς, ἔπεφνεν
+"syntactic pattern" – For example: apposition, parataxis, right-dislocation
+"discourse feature" – For example: clustering, segmentation, resumptive repetition
+"intertextual trigger" – For example: formula repetition
+"morphological marker" – For example: accusative singular, optative mood
+"cognitive/processing feature" – For example: priming, redundancy, salience shift
+"poetic/performative function" – For example: vocal function, stylization, name-highlighting, oral signature
+"interaction between grammar & discourse" – For example: apposition as separate unit, formula fit to meter, overlap of syntax and meter, divergence of syntax and meter
+
+For entities you should extract only the technical term and make sure each item in the list of entities refers to only one entity in the singular form without any adjective prefixes or explanation. For example, the entity should be "supplementary participle" instead of "supplementary participles in the nominative plural".
+
+You should include the greek phrases in your summary. 
