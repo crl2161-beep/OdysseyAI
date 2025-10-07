@@ -1,0 +1,60 @@
+code_snippets/lexical_analysis_example.py
+-- coding: utf-8 --
+""" Very lightweight lexical/morphological analysis for Ancient Greek tokens. This is heuristic and pedagogical, not a full parser. No external deps.
+
+Approach:
+
+Strip diacritics for lexicon lookup and ending-based guesses.
+Recognize common particles, prepositions, and conjunctions.
+Guess simple noun and verb features by endings (1st/2nd declension; present indicative/infinitive).
+Run directly to see a demo on a short line. """ from future import annotations import unicodedata import re from typing import Dict, List
+
+Utility: strip diacritics and unify sigmas for crude matching
+def strip_diacritics(s: str) -> str: nfd = unicodedata.normalize("NFD", s) base = "".join(ch for ch in nfd if unicodedata.category(ch) != "Mn") return unicodedata.normalize("NFC", base)
+
+def to_lex_key(s: str) -> str: s2 = strip_diacritics(s).lower() s2 = s2.replace("ς", "σ") return s2
+
+Mini-lexica for closed classes (accentless keys)
+PARTICLES = {to_lex_key(w) for w in [ "δέ", "γε", "τε", "μήν", "περ", "που", "ἄρα", "δή", "νύ", "μέν" ]} CONJUNCTIONS = {to_lex_key(w) for w in ["καί", "ἀλλά", "ἀλλ", "ἤ", "ὡς"]} PREPOSITIONS = {to_lex_key(w) for w in [ "ἐν", "εἰς", "ἐς", "ἐκ", "ἐξ", "ἀπό", "κατά", "πρός", "παρά", "διά", "ἀνά", "ὑπό", "ὑπέρ", "μετά", "περί", "ἐπί" ]} ARTICLES = {to_lex_key(w) for w in [ "ὁ", "ἡ", "τό", "οἱ", "αἱ", "τά", "τοῦ", "τῆς", "τοῦ", "τοῖς", "ταῖς", "τοῖς", "τόν", "τήν", "τό" ]}
+
+Simple patterns for noun and verb endings (very incomplete; for demonstration)
+NOUN_PATTERNS = [ (re.compile(r".*οσ$"), {"pos": "noun", "case": "nom", "num": "sg", "gend": "masc"}), (re.compile(r".*ον$"), {"pos": "noun", "case": "acc/nom", "num": "sg", "gend": "neut/masc"}), (re.compile(r".*ου$"), {"pos": "noun", "case": "gen", "num": "sg"}), (re.compile(r".*οι$"), {"pos": "noun", "case": "nom", "num": "pl", "gend": "masc"}), (re.compile(r".*ουσ$"), {"pos": "noun", "case": "acc", "num": "pl", "gend": "masc"}), (re.compile(r".*ας$"), {"pos": "noun", "case": "acc", "num": "pl", "gend": "fem"}), (re.compile(r".*α$"), {"pos": "noun", "case": "nom/acc", "num": "pl", "gend": "neut"}), ]
+
+VERB_PATTERNS = [ (re.compile(r".*ει$"), {"pos": "verb", "tense": "pres", "mood": "ind", "voice": "act", "person": "3", "num": "sg"}), (re.compile(r".*ουσι\b"), {"pos": "verb", "tense": "pres", "mood": "ind", "voice": "act", "person": "3", "num": "pl"}), (re.compile(r".*ειν$"), {"pos": "verb", "tense": "pres", "mood": "inf", "voice": "act"}), (re.compile(r".*εσθαι$"), {"pos": "verb", "tense": "pres", "mood": "inf", "voice": "mp"}), ]
+
+PRONOUNS = {to_lex_key(w) for w in ["ὅς", "ἥ", "ὅ", "ὅν", "τίς", "τί"]}
+
+def analyze_token(tok: str) -> Dict[str, str]: """Return a simple analysis dict for a Greek token.""" key = to_lex_key(tok)
+
+
+# Closed classes first
+if key in PARTICLES:
+    return {"form": tok, "lemma": tok, "pos": "particle"}
+if key in CONJUNCTIONS:
+    return {"form": tok, "lemma": tok, "pos": "conj"}
+if key in PREPOSITIONS:
+    return {"form": tok, "lemma": tok, "pos": "prep"}
+if key in ARTICLES:
+    return {"form": tok, "lemma": "ὁ", "pos": "article"}
+if key in PRONOUNS:
+    return {"form": tok, "lemma": "ὅς/τίς", "pos": "pron"}
+
+# Verb guess
+for pat, feat in VERB_PATTERNS:
+    if pat.match(key):
+        out = {"form": tok}
+        out.update(feat)
+        return out
+
+# Noun guess by ending (very crude)
+for pat, feat in NOUN_PATTERNS:
+    if pat.match(key):
+        out = {"form": tok}
+        out.update(feat)
+        return out
+
+# Default fallback: unknown
+return {"form": tok, "pos": "unknown"}
+def analyze_tokens(tokens: List[str]) -> List[Dict[str, str]]: return [analyze_token(t) for t in tokens]
+
+if name == "main": sample_tokens = [ "ἄνδρα", "μοι", "ἔννεπε", "Μοῦσα", "πολύτροπον", "ὃς", "μάλα", "πολλὰ" ] print("Input tokens:", sample_tokens) for a in analyze_tokens(sample_tokens): print(a)

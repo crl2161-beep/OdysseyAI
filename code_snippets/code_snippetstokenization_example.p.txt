@@ -1,0 +1,23 @@
+code_snippets/tokenization_example.py
+-- coding: utf-8 --
+""" A minimal Ancient Greek tokenizer with basic Unicode normalization, apostrophe/elision handling, and optional punctuation retention. No external dependencies.
+
+Run directly to see a demo. """ from future import annotations import re import unicodedata from typing import List
+
+Basic punctuation sets (includes both Latin and Greek variants)
+_PUNCT_CHARS = """.,;:!?·—–-()[]{}""" + "\u0387\u037E\u2014\u2013\u00B7\u00B4\u2018\u2019\u02BC"'" # Greek ano teleia, Greek q-mark, dashes, quotes, apostrophes _PUNCT_RE = re.compile(r"[{}]".format(re.escape(_PUNCT_CHARS))) _WS_RE = re.compile(r"\s+")
+
+Normalize apostrophes to a single code point (ASCII apostrophe) for simpler handling
+_APOS_VARIANTS = ["\u2019", "\u02BC", "\u2032", "\uFF07"]
+
+def normalize_greek(text: str) -> str: """Normalize to NFC, fold various apostrophes to a plain ASCII apostrophe, unify whitespace.""" if not isinstance(text, str): raise TypeError("Expected str") s = unicodedata.normalize("NFC", text) for ch in _APOS_VARIANTS: s = s.replace(ch, "'") # Also normalize Greek question mark variant to ASCII ';' when present s = s.replace("\u037E", ";") # Greek question mark s = _WS_RE.sub(" ", s.strip()) return s
+
+def split_with_punct(s: str) -> List[str]: """Split string into tokens keeping punctuation as separate tokens.""" # Surround punctuation with spaces so that split isolates them s2 = _PUNCT_RE.sub(lambda m: f" {m.group(0)} ", s) parts = [p for p in s2.split() if p] return parts
+
+def strip_edge_punct(tok: str) -> str: """Remove leading/trailing punctuation while preserving Greek diacritics within words.""" # Strip only characters from our punctuation set at edges start = 0 end = len(tok) while start < end and tok[start] in _PUNCT_CHARS: start += 1 while end > start and tok[end - 1] in _PUNCT_CHARS: end -= 1 return tok[start]
+
+def handle_elision(tok: str) -> str: """Normalize common elision shapes: ἀλλ' -> ἀλλά (optional), or keep as ἀλλ' (default keeps).""" # Here we keep the surface form but remove a trailing apostrophe used for elision, e.g., ἀλλ' -> ἀλλ # You can adapt this to expand to full forms if desired. if tok.endswith("'"): return tok[:-1] return tok
+
+def tokenize_greek(text: str, keep_punct: bool = False) -> List[str]: """ Tokenize a Greek string. - Normalizes Unicode. - Splits on whitespace and isolates punctuation. - Optionally removes punctuation tokens. - Normalizes elision marks by stripping trailing apostrophes. """ s = normalize_greek(text) raw_parts = split_with_punct(s) tokens: List[str] = [] for part in raw_parts: if keep_punct: if part in _PUNCT_CHARS: tokens.append(part) continue cleaned = handle_elision(part) tokens.append(cleaned) else: if part in _PUNCT_CHARS: continue cleaned = strip_edge_punct(part) if not cleaned: continue cleaned = handle_elision(cleaned) tokens.append(cleaned) return tokens
+
+if name == "main": sample = "ἄνδρα μοι ἔννεπε, Μοῦσα, πολύτροπον, ὃς μάλα πολλὰ;" print("Raw:", sample) print("Normalized:", normalize_greek(sample)) print("Tokens (no punct):", tokenize_greek(sample, keep_punct=False)) print("Tokens (with punct):", tokenize_greek(sample, keep_punct=True))

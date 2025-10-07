@@ -1,0 +1,48 @@
+code_snippets/next_token_prompt_example.py
+-- coding: utf-8 --
+""" Generate a pedagogical "next-token" prompt for Ancient Greek reading. Given a list of tokens and a target index to blank, produce a hint about what kind of word likely fits, using simple contextual heuristics (prepositions, articles, and particles).
+
+Run directly to see a demo. """ from future import annotations from typing import List, Tuple
+
+Minimal sets for heuristic hints (lowercased, accent preserved but we also check bare variants)
+PREP_CASE_HINTS = { # preposition: typical case(s) "ἐν": "dative", "μετά": "gen/dat/acc (commonly gen with 'after', acc with 'among')", "εἰς": "accusative", "ἐς": "accusative", "ἐκ": "genitive", "ἐξ": "genitive", "ἀπό": "genitive", "κατά": "genitive/accusative", "πρός": "accusative (also dat/gen with different senses)", "παρά": "gen/dat/acc", "διά": "gen/acc", "ἀνά": "accusative", "ὑπέρ": "genitive", "ὑπό": "gen/acc", "περί": "gen/acc", "ἐπί": "gen/dat/acc", }
+
+ARTICLES = {"ὁ", "ἡ", "τό", "οἱ", "αἱ", "τά", "τοῦ", "τῆς", "τῷ", "τοῖς", "ταῖς", "τόν", "τήν", "τούς", "τάς"} PARTICLES = {"δέ", "τε", "γε", "μέν", "ἄρα", "δή"}
+
+def lower_base(s: str) -> str: try: return s.lower() except Exception: return s
+
+def blank_token(tokens: List[str], target_idx: int, blank: str = "___") -> str: out = tokens[:] if 0 <= target_idx < len(out): out[target_idx] = blank return " ".join(out)
+
+def guess_hint(tokens: List[str], idx: int) -> Tuple[str, str]: """Return (expected_type, hint) based on a tiny set of heuristics.""" prev = lower_base(tokens[idx - 1]) if idx - 1 >= 0 else "" nxt = lower_base(tokens[idx + 1]) if idx + 1 < len(tokens) else ""
+
+
+# Preposition immediately before usually governs a noun (or nominal) in a case
+if prev in PREP_CASE_HINTS:
+    case = PREP_CASE_HINTS[prev]
+    return (
+        "noun (case per prep)",
+        f"Previous word is a preposition ({prev}) → expect a noun (or article+adj+noun) in {case}"
+    )
+
+# Article before often expects a noun or an agreeing adjective/participle
+if prev in ARTICLES:
+    return (
+        "noun/adj/participle (agreement)",
+        f"Article before ({prev}) → expect a noun or an agreeing adjective/participle"
+    )
+
+# If next is a particle like δέ/τε, the target may be a finite verb completing a clause
+if nxt in PARTICLES:
+    return (
+        "likely finite verb",
+        f"A clause boundary particle follows ({nxt}) → a finite verb often precedes it"
+    )
+
+# Otherwise, default to an open class with a gentle nudge toward verb vs noun
+return (
+    "open class (noun/verb/adj)",
+    "Use local syntax: does the subject already appear? If so, a finite verb may fit; if a preposition appears earlier, a noun phrase may fit."
+)
+def make_next_token_prompt(tokens: List[str], target_idx: int) -> str: masked = blank_token(tokens, target_idx) exp_type, hint = guess_hint(tokens, target_idx) lines = [] lines.append("Greek (with blank):") lines.append(masked) lines.append("") lines.append("Question: What type of word belongs in the blank?") lines.append("Answer format examples: 'verb 3rd sg pres ind act' or 'noun sg masc nom' or 'prep' etc.") lines.append(f"Contextual hint: {hint} (expected type: {exp_type}).") return "\n".join(lines)
+
+if name == "main": # Demo using a famous opening line tokens tokens = ["ἄνδρα", "μοι", "ἔννεπε", ",", "Μοῦσα", ",", "πολύτροπον", ",", "ὃς", "μάλα", "πολλὰ"] # Choose a target index to blank; e.g., blank the verb "ἔννεπε" at idx 2 target_idx = 2 print(make_next_token_prompt(tokens, target_idx))
